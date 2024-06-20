@@ -4,10 +4,12 @@ type lexer struct {
 	input []byte
 	pos   int
 	ch    byte
+	peek  byte
 }
 
 func newLexer(in []byte) *lexer {
 	l := &lexer{input: in}
+	l.readCh()
 	l.readCh()
 	return l
 }
@@ -24,7 +26,6 @@ func (l *lexer) nextToken() token {
 		tok._type = t_EOF
 	case '+':
 		tok._type, tok.literal = t_ADD, "+"
-		l.readCh()
 	default:
 		if l.ch <= '9' && l.ch >= '0' {
 			var num []byte
@@ -34,18 +35,19 @@ func (l *lexer) nextToken() token {
 			tok._type, tok.literal = t_NUM, string(num)
 		} else {
 			tok._type = t_INVALID
-			l.readCh()
 		}
 	}
 
+	l.readCh()
 	return tok
 }
 
 func (l *lexer) readCh() {
+	l.ch = l.peek
 	if l.pos >= len(l.input) {
-		l.ch = 0
+		l.peek = 0
 	} else {
-		l.ch = l.input[l.pos]
-		l.pos++
+		l.peek = l.input[l.pos]
 	}
+	l.pos++
 }
