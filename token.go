@@ -12,12 +12,14 @@ type token struct {
 const (
 	_ tokenType = iota
 	t_NUM
+	t_ADD
 	t_INVALID
 	t_EOF
 )
 
 var literals = map[tokenType]string{
 	t_NUM:     "NUMBER",
+	t_ADD:     "+",
 	t_INVALID: "INVALID",
 	t_EOF:     "EOF",
 }

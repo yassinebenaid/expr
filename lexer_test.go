@@ -3,14 +3,14 @@ package expr
 import "testing"
 
 func TestLexer(t *testing.T) {
-	input := `123 ,+`
+	input := `123 + 456`
 
 	l := newLexer([]byte(input))
 
 	tokens := []token{
 		{t_NUM, "123"},
-		{t_INVALID, ""},
-		{t_INVALID, ""},
+		{t_ADD, "+"},
+		{t_NUM, "456"},
 		{t_EOF, ""},
 	}
 
