@@ -30,3 +30,13 @@ func (t tokenType) String() string {
 	}
 	panic(fmt.Sprintf("token is unknown [%d]", t))
 }
+
+const (
+	_ = iota
+	_MEDIUM
+	_HIGH
+)
+
+var precedences = map[tokenType]int{
+	t_ADD: _MEDIUM,
+}
