@@ -12,7 +12,7 @@ func (p *parser) parse() expression {
 	var exp expression
 	switch tok._type {
 	case t_NUM:
-		n, _ := strconv.ParseInt(tok.literal, 2, 64)
+		n, _ := strconv.ParseInt(tok.literal, 10, 64)
 		if precedences[p.l.readToken()._type] > precedences[tok._type] {
 			exp = p.parseInfix(integer(n))
 		} else {
