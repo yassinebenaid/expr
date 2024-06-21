@@ -5,9 +5,13 @@ import "testing"
 func TestCanParseInfix(t *testing.T) {
 	input := `1 + 2 + 3`
 	l := newLexer([]byte(input))
-	p := parser{l}
+	p := parser{l: l}
 
 	n := p.parse()
+
+	if len(p.errors) > 0 {
+		t.Fatalf("parser has %d errors: %v", len(p.errors), p.errors)
+	}
 
 	if inf, ok := n.(infix); !ok {
 		t.Fatalf(`expected expression to be of type "infix", its of type "%T"`, n)
