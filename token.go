@@ -13,6 +13,7 @@ const (
 	_ tokenType = iota
 	t_NUM
 	t_ADD
+	t_SUB
 	t_INVALID
 	t_EOF
 )
@@ -20,6 +21,7 @@ const (
 var literals = map[tokenType]string{
 	t_NUM:     "NUMBER",
 	t_ADD:     "+",
+	t_SUB:     "-",
 	t_INVALID: "INVALID",
 	t_EOF:     "EOF",
 }
@@ -39,4 +41,5 @@ const (
 
 var precedences = map[tokenType]int{
 	t_ADD: _MEDIUM,
+	t_SUB: _MEDIUM,
 }
