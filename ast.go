@@ -13,7 +13,7 @@ type infix struct {
 }
 
 func (i infix) String() string {
-	return fmt.Sprintf("%v %v %v", i.left.String(), i.operator.literal, i.right.String())
+	return fmt.Sprintf("(%v %v %v)", i.left.String(), i.operator.literal, i.right.String())
 }
 
 type integer int
