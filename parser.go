@@ -15,6 +15,11 @@ func (p *parser) parse() expression {
 
 	var exp expression
 	switch tok._type {
+	case t_SUB:
+		var pre prefix
+		pre.operator = tok
+		pre.operand = p.parse()
+		exp = pre
 	case t_NUM:
 		n, err := strconv.ParseInt(tok.literal, 10, 64)
 		if err != nil {
@@ -25,6 +30,8 @@ func (p *parser) parse() expression {
 		} else {
 			exp = integer(n)
 		}
+	default:
+		p.errors = append(p.errors, fmt.Errorf(`unexpected token "%v"`, tok._type.String()))
 	}
 
 	if tok = p.l.nextToken(); tok._type != t_EOF {

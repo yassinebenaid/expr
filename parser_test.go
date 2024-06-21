@@ -1,6 +1,26 @@
 package expr
 
-import "testing"
+import (
+	"testing"
+)
+
+func TestCanParseInteger(t *testing.T) {
+	input := `123`
+	l := newLexer([]byte(input))
+	p := parser{l: l}
+
+	n := p.parse()
+
+	if len(p.errors) > 0 {
+		t.Fatalf("parser has %d errors: %v", len(p.errors), p.errors)
+	}
+
+	if v, ok := n.(integer); !ok {
+		t.Fatalf(`expected expression to be of type "integer", its of type "%T"`, n)
+	} else if v != 123 {
+		t.Fatalf(`expected integer to be 123, its "%v"`, v)
+	}
+}
 
 func TestCanParseInfix(t *testing.T) {
 	input := `1 + 2 + 3`
@@ -10,7 +30,7 @@ func TestCanParseInfix(t *testing.T) {
 	n := p.parse()
 
 	if len(p.errors) > 0 {
-		t.Fatalf("parser has %d errors: %v", len(p.errors), p.errors)
+		t.Fatalf("parser has %d errors#0: %v", len(p.errors), p.errors[0])
 	}
 
 	if inf, ok := n.(infix); !ok {

@@ -26,6 +26,8 @@ func (l *lexer) nextToken() token {
 		tok._type = t_EOF
 	case '+':
 		tok._type, tok.literal = t_ADD, "+"
+	case '-':
+		tok._type, tok.literal = t_SUB, "-"
 	default:
 		if l.ch <= '9' && l.ch >= '0' {
 			var num []byte
