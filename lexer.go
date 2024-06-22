@@ -53,10 +53,3 @@ func (l *lexer) readCh() {
 	}
 	l.pos++
 }
-
-func (l *lexer) readToken() token {
-	var peek, ch, pos = l.peek, l.ch, l.pos
-	tok := l.nextToken()
-	l.peek, l.ch, l.pos = peek, ch, pos
-	return tok
-}
