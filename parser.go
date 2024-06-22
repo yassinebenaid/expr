@@ -52,7 +52,7 @@ func (p *parser) parseExpression(precedence int) expression {
 
 	exp := pp()
 
-	for p.nextToken._type != t_EOF && precedence < precedences[p.currToken._type] {
+	for precedence < precedences[p.currToken._type] {
 		ip := p.infixParser[p.currToken._type]
 		if ip == nil {
 			return exp
