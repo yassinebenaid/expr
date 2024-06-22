@@ -34,7 +34,7 @@ func newParser(l *lexer) *parser {
 }
 
 func (p *parser) parse() expression {
-	var exp expression = p.parseExpression()
+	var exp expression = p.parseExpression(_LOW)
 
 	if p.currToken._type != t_EOF {
 		p.errors = append(p.errors, fmt.Errorf(`unexpected token "%v", expected "EOF"`, p.currToken.literal))
@@ -43,7 +43,7 @@ func (p *parser) parse() expression {
 	return exp
 }
 
-func (p *parser) parseExpression() expression {
+func (p *parser) parseExpression(precedence int) expression {
 	pp := p.prefixParser[p.currToken._type]
 	if pp == nil {
 		p.errors = append(p.errors, fmt.Errorf("unexpected token %q", p.currToken._type))
@@ -52,8 +52,11 @@ func (p *parser) parseExpression() expression {
 
 	exp := pp()
 
-	ip := p.infixParser[p.currToken._type]
-	if ip != nil {
+	for p.nextToken._type != t_EOF && precedence < precedences[p.currToken._type] {
+		ip := p.infixParser[p.currToken._type]
+		if ip == nil {
+			return exp
+		}
 		exp = ip(exp)
 	}
 
@@ -73,7 +76,7 @@ func (p *parser) parsePrefix() expression {
 	var pref prefix
 	pref.operator = p.currToken
 	p.proceed()
-	pref.operand = p.parseExpression()
+	pref.operand = p.parseExpression(_HIGH)
 	return pref
 }
 
@@ -81,8 +84,9 @@ func (p *parser) parseInfix(left expression) expression {
 	var in infix
 	in.left = left
 	in.operator = p.currToken
+	precedence := precedences[p.currToken._type]
 	p.proceed()
-	in.right = p.parseExpression()
+	in.right = p.parseExpression(precedence)
 	return in
 }
 

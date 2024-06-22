@@ -35,6 +35,7 @@ func (t tokenType) String() string {
 
 const (
 	_ = iota
+	_LOW
 	_MEDIUM
 	_HIGH
 )

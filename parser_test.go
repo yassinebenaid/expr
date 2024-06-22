@@ -67,30 +67,31 @@ func TestCanParsePrefix(t *testing.T) {
 	}
 }
 
-// func TestCanParsex(t *testing.T) {
-// 	testCases := []struct {
-// 		input              string
-// 		expectedExpression string
-// 	}{
-// 		{"1", "1"},
-// 		{"-1", "(-1)"},
-// 		{"--1", "(-(-1))"},
-// 		{"1 + 2", "(1 + 2)"},
-// 		{"1 - 2", "(1 - 2)"},
-// 		{"1 + 2 - 3 + 4 - 5", "((((1 + 2) - 3) + 4) - 5)"},
-// 	}
+func TestCanParsex(t *testing.T) {
+	testCases := []struct {
+		input              string
+		expectedExpression string
+	}{
+		{"1", "1"},
+		{"-1", "(-1)"},
+		{"--1", "(-(-1))"},
+		{"1 + 2", "(1 + 2)"},
+		{"1 - 2", "(1 - 2)"},
+		{"1 + 2 - 3 + 4 - 5", "((((1 + 2) - 3) + 4) - 5)"},
+		{"-1 + -2 - -3 + -4 - -5", "(((((-1) + (-2)) - (-3)) + (-4)) - (-5))"},
+	}
 
-// 	for i, tc := range testCases {
-// 		l := newLexer([]byte(tc.input))
-// 		p := newParser(l)
-// 		n := p.parse()
+	for i, tc := range testCases {
+		l := newLexer([]byte(tc.input))
+		p := newParser(l)
+		n := p.parse()
 
-// 		if len(p.errors) > 0 {
-// 			t.Fatalf("case#%d: parser has %d errors: %v", i, len(p.errors), p.errors)
-// 		}
+		if len(p.errors) > 0 {
+			t.Fatalf("parser has %d errors#0: %v", len(p.errors), p.errors[0])
+		}
 
-// 		if exp := n.String(); tc.expectedExpression != exp {
-// 			t.Fatalf(`case#%d: expected "%s", got "%s"`, i, tc.expectedExpression, exp)
-// 		}
-// 	}
-// }
+		if exp := n.String(); tc.expectedExpression != exp {
+			t.Fatalf(`case#%d: expected "%s", got "%s"`, i, tc.expectedExpression, exp)
+		}
+	}
+}
