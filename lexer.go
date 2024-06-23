@@ -21,23 +21,26 @@ func (l *lexer) nextToken() token {
 		l.readCh()
 	}
 
-	switch l.ch {
-	case 0:
+	switch {
+	case l.ch == 0:
 		tok._type = t_EOF
-	case '+':
+	case l.ch == '+':
 		tok._type, tok.literal = t_ADD, "+"
-	case '-':
+	case l.ch == '-':
 		tok._type, tok.literal = t_SUB, "-"
-	default:
-		if l.ch <= '9' && l.ch >= '0' {
-			var num []byte
-			for ; l.ch <= '9' && l.ch >= '0'; l.readCh() {
-				num = append(num, l.ch)
+	case l.ch <= '9' && l.ch >= '0':
+		var num []byte
+		for {
+			num = append(num, l.ch)
+
+			if l.peek > '9' || l.peek < '0' {
+				break
 			}
-			tok._type, tok.literal = t_NUM, string(num)
-		} else {
-			tok._type = t_INVALID
+			l.readCh()
 		}
+		tok._type, tok.literal = t_NUM, string(num)
+	default:
+		tok._type, tok.literal = t_INVALID, string(l.ch)
 	}
 
 	l.readCh()
