@@ -8,7 +8,6 @@ import (
 type parser struct {
 	l         *lexer
 	currToken token
-	nextToken token
 	errors    []error
 
 	prefixParser map[tokenType]func() expression
@@ -19,7 +18,6 @@ func newParser(l *lexer) *parser {
 	p := &parser{
 		l: l,
 	}
-	p.proceed()
 	p.proceed()
 
 	p.prefixParser = map[tokenType]func() expression{
@@ -91,8 +89,7 @@ func (p *parser) parseInfix(left expression) expression {
 }
 
 func (p *parser) proceed() {
-	p.currToken = p.nextToken
-	p.nextToken = p.l.nextToken()
+	p.currToken = p.l.nextToken()
 }
 
 // tok := p.currToken

@@ -67,7 +67,7 @@ func TestCanParsePrefix(t *testing.T) {
 	}
 }
 
-func TestCanParsex(t *testing.T) {
+func TestCanParse(t *testing.T) {
 	testCases := []struct {
 		input              string
 		expectedExpression string
