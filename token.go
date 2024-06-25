@@ -14,6 +14,7 @@ const (
 	t_NUM
 	t_ADD
 	t_SUB
+	t_MUL
 	t_INVALID
 	t_EOF
 )
@@ -22,6 +23,7 @@ var literals = map[tokenType]string{
 	t_NUM:     "NUMBER",
 	t_ADD:     "+",
 	t_SUB:     "-",
+	t_MUL:     "*",
 	t_INVALID: "INVALID",
 	t_EOF:     "EOF",
 }
@@ -43,4 +45,5 @@ const (
 var precedences = map[tokenType]int{
 	t_ADD: _MEDIUM,
 	t_SUB: _MEDIUM,
+	t_MUL: _HIGH,
 }

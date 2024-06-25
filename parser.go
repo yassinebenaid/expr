@@ -27,6 +27,7 @@ func newParser(l *lexer) *parser {
 	p.infixParser = map[tokenType]func(expression) expression{
 		t_ADD: p.parseInfix,
 		t_SUB: p.parseInfix,
+		t_MUL: p.parseInfix,
 	}
 	return p
 }
@@ -91,28 +92,3 @@ func (p *parser) parseInfix(left expression) expression {
 func (p *parser) proceed() {
 	p.currToken = p.l.nextToken()
 }
-
-// tok := p.currToken
-
-// var exp expression
-// switch tok._type {
-// case t_SUB:
-// 	var pre prefix
-// 	pre.operator = tok
-// 	pre.operand = p.parse()
-// 	exp = pre
-// case t_NUM:
-// 	n, err := strconv.ParseInt(tok.literal, 10, 64)
-// 	if err != nil {
-// 		p.errors = append(p.errors, fmt.Errorf(`unable to parse integer "%v", %v`, tok.literal, err.Error()))
-// 	}
-// 	if precedences[p.currToken._type] > precedences[tok._type] {
-// 		exp = p.parseInfix(integer(n))
-// 	} else {
-// 		exp = integer(n)
-// 	}
-// default:
-// 	p.errors = append(p.errors, fmt.Errorf(`unexpected token "%v"`, tok._type.String()))
-// }
-
-// return exp
