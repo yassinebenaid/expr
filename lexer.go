@@ -30,6 +30,8 @@ func (l *lexer) nextToken() token {
 		tok._type, tok.literal = _T_SUB, "-"
 	case l.ch == '*':
 		tok._type, tok.literal = _T_MUL, "*"
+	case l.ch == '/':
+		tok._type, tok.literal = _T_DEV, "/"
 	case l.ch <= '9' && l.ch >= '0':
 		var num []byte
 		for {
