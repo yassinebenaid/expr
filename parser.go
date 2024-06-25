@@ -28,6 +28,7 @@ func newParser(l *lexer) *parser {
 		_T_ADD: p.parseInfix,
 		_T_SUB: p.parseInfix,
 		_T_MUL: p.parseInfix,
+		_T_DEV: p.parseInfix,
 	}
 	return p
 }
