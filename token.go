@@ -11,21 +11,21 @@ type token struct {
 
 const (
 	_ tokenType = iota
-	t_NUM
-	t_ADD
-	t_SUB
-	t_MUL
-	t_INVALID
-	t_EOF
+	_T_NUM
+	_T_ADD
+	_T_SUB
+	_T_MUL
+	_T_INVALID
+	_T_EOF
 )
 
 var literals = map[tokenType]string{
-	t_NUM:     "NUMBER",
-	t_ADD:     "+",
-	t_SUB:     "-",
-	t_MUL:     "*",
-	t_INVALID: "INVALID",
-	t_EOF:     "EOF",
+	_T_NUM:     "NUMBER",
+	_T_ADD:     "+",
+	_T_SUB:     "-",
+	_T_MUL:     "*",
+	_T_INVALID: "INVALID",
+	_T_EOF:     "EOF",
 }
 
 func (t tokenType) String() string {
@@ -37,13 +37,13 @@ func (t tokenType) String() string {
 
 const (
 	_ = iota
-	_LOW
-	_MEDIUM
-	_HIGH
+	_PREC_LOW
+	_PREC_MEDIUM
+	_PREC_HIGH
 )
 
 var precedences = map[tokenType]int{
-	t_ADD: _MEDIUM,
-	t_SUB: _MEDIUM,
-	t_MUL: _HIGH,
+	_T_ADD: _PREC_MEDIUM,
+	_T_SUB: _PREC_MEDIUM,
+	_T_MUL: _PREC_HIGH,
 }

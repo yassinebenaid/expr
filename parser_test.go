@@ -33,7 +33,7 @@ func TestCanParseInfix(t *testing.T) {
 
 	if inf, ok := exp.(infix); !ok {
 		t.Fatalf(`expected expression to be of type "infix", its of type "%T"`, exp)
-	} else if inf.operator._type != t_ADD {
+	} else if inf.operator._type != _T_ADD {
 		t.Fatalf(`expected infix.operator to be +, its "%v"`, inf.operator._type)
 	} else if v, ok := inf.left.(integer); !ok {
 		t.Fatalf(`expected infix.left to be of type "integer", its of type "%T"`, inf.left)
@@ -58,7 +58,7 @@ func TestCanParsePrefix(t *testing.T) {
 
 	if inf, ok := exp.(prefix); !ok {
 		t.Fatalf(`expected expression to be of type "prefix", its of type "%T"`, exp)
-	} else if inf.operator._type != t_SUB {
+	} else if inf.operator._type != _T_SUB {
 		t.Fatalf(`expected prefix.operator to be -, its "%v"`, inf.operator._type)
 	} else if v, ok := inf.operand.(integer); !ok {
 		t.Fatalf(`expected prefix.operand to be of type "integer", its of type "%T"`, inf.operand)

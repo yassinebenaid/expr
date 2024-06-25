@@ -8,15 +8,15 @@ func TestLexer(t *testing.T) {
 	l := newLexer([]byte(input))
 
 	tokens := []token{
-		{t_NUM, "123"},
-		{t_ADD, "+"},
-		{t_NUM, "456"},
-		{t_MUL, "*"},
-		{t_NUM, "99"},
-		{t_SUB, "-"},
-		{t_NUM, "199"},
-		{t_INVALID, "s"},
-		{t_EOF, ""},
+		{_T_NUM, "123"},
+		{_T_ADD, "+"},
+		{_T_NUM, "456"},
+		{_T_MUL, "*"},
+		{_T_NUM, "99"},
+		{_T_SUB, "-"},
+		{_T_NUM, "199"},
+		{_T_INVALID, "s"},
+		{_T_EOF, ""},
 	}
 
 	for i, tn := range tokens {

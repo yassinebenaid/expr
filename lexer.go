@@ -23,13 +23,13 @@ func (l *lexer) nextToken() token {
 
 	switch {
 	case l.ch == 0:
-		tok._type = t_EOF
+		tok._type = _T_EOF
 	case l.ch == '+':
-		tok._type, tok.literal = t_ADD, "+"
+		tok._type, tok.literal = _T_ADD, "+"
 	case l.ch == '-':
-		tok._type, tok.literal = t_SUB, "-"
+		tok._type, tok.literal = _T_SUB, "-"
 	case l.ch == '*':
-		tok._type, tok.literal = t_MUL, "*"
+		tok._type, tok.literal = _T_MUL, "*"
 	case l.ch <= '9' && l.ch >= '0':
 		var num []byte
 		for {
@@ -40,9 +40,9 @@ func (l *lexer) nextToken() token {
 			}
 			l.readCh()
 		}
-		tok._type, tok.literal = t_NUM, string(num)
+		tok._type, tok.literal = _T_NUM, string(num)
 	default:
-		tok._type, tok.literal = t_INVALID, string(l.ch)
+		tok._type, tok.literal = _T_INVALID, string(l.ch)
 	}
 
 	l.readCh()

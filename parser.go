@@ -21,21 +21,21 @@ func newParser(l *lexer) *parser {
 	p.proceed()
 
 	p.prefixParser = map[tokenType]func() expression{
-		t_NUM: p.parseInteger,
-		t_SUB: p.parsePrefix,
+		_T_NUM: p.parseInteger,
+		_T_SUB: p.parsePrefix,
 	}
 	p.infixParser = map[tokenType]func(expression) expression{
-		t_ADD: p.parseInfix,
-		t_SUB: p.parseInfix,
-		t_MUL: p.parseInfix,
+		_T_ADD: p.parseInfix,
+		_T_SUB: p.parseInfix,
+		_T_MUL: p.parseInfix,
 	}
 	return p
 }
 
 func (p *parser) parse() expression {
-	var exp expression = p.parseExpression(_LOW)
+	var exp expression = p.parseExpression(_PREC_LOW)
 
-	if p.currToken._type != t_EOF {
+	if p.currToken._type != _T_EOF {
 		p.errors = append(p.errors, fmt.Errorf(`unexpected token "%v", expected "EOF"`, p.currToken.literal))
 	}
 
@@ -75,7 +75,7 @@ func (p *parser) parsePrefix() expression {
 	var pref prefix
 	pref.operator = p.currToken
 	p.proceed()
-	pref.operand = p.parseExpression(_HIGH)
+	pref.operand = p.parseExpression(_PREC_HIGH)
 	return pref
 }
 
