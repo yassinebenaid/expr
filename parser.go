@@ -85,6 +85,12 @@ func (p *parser) parseInfix(left expression) expression {
 	in.operator = p.currToken
 	precedence := precedences[p.currToken._type]
 	p.proceed()
+
+	if p.currToken._type == _T_EOF {
+		p.errors = append(p.errors, fmt.Errorf("unexpected end of expression"))
+		return nil
+	}
+
 	in.right = p.parseExpression(precedence)
 	return in
 }
