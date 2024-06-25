@@ -23,7 +23,7 @@ func (l *lexer) nextToken() token {
 
 	switch {
 	case l.ch == 0:
-		tok._type = _T_EOF
+		tok._type, tok.literal = _T_EOF, "EOF"
 	case l.ch == '+':
 		tok._type, tok.literal = _T_ADD, "+"
 	case l.ch == '-':

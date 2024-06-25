@@ -80,6 +80,8 @@ func TestCanParse(t *testing.T) {
 		{"1 + 2 - 3 + 4 - 5", "((((1 + 2) - 3) + 4) - 5)"},
 		{"-1 + -2 - -3 + -4 - -5", "(((((-1) + (-2)) - (-3)) + (-4)) - (-5))"},
 		{"1 * 2", "(1 * 2)"},
+		{"-1 * -2", "((-1) * (-2))"},
+		{"1 + 2 * 3 - -2", "((1 + (2 * 3)) - (-2))"},
 	}
 
 	for i, tc := range testCases {
@@ -93,6 +95,31 @@ func TestCanParse(t *testing.T) {
 
 		if exp := n.String(); tc.expectedExpression != exp {
 			t.Fatalf(`case#%d: expected "%s", got "%s"`, i, tc.expectedExpression, exp)
+		}
+	}
+}
+
+func TestParserErrors(t *testing.T) {
+	testCases := []struct {
+		input         string
+		expectedError string
+	}{
+		{"x", `unexpected token "x"`},
+		{"1 + x", `unexpected token "x"`},
+		{"1 + ", `unexpected token "EOF"`},
+	}
+
+	for i, tc := range testCases {
+		l := newLexer([]byte(tc.input))
+		p := newParser(l)
+		p.parse()
+
+		if len(p.errors) == 0 {
+			t.Fatalf("parser has no errors")
+		}
+
+		if err := p.errors[0]; tc.expectedError != err.Error() {
+			t.Fatalf(`case#%d: expected error "%s", got "%s"`, i, tc.expectedError, err)
 		}
 	}
 }

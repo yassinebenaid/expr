@@ -45,7 +45,7 @@ func (p *parser) parse() expression {
 func (p *parser) parseExpression(precedence int) expression {
 	pp := p.prefixParser[p.currToken._type]
 	if pp == nil {
-		p.errors = append(p.errors, fmt.Errorf("unexpected token %q", p.currToken._type))
+		p.errors = append(p.errors, fmt.Errorf("unexpected token %q", p.currToken.literal))
 		return nil
 	}
 

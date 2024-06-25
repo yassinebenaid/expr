@@ -16,7 +16,7 @@ func TestLexer(t *testing.T) {
 		{_T_SUB, "-"},
 		{_T_NUM, "199"},
 		{_T_INVALID, "s"},
-		{_T_EOF, ""},
+		{_T_EOF, "EOF"},
 	}
 
 	for i, tn := range tokens {
