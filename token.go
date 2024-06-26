@@ -16,6 +16,8 @@ const (
 	_T_SUB
 	_T_MUL
 	_T_DEV
+	_T_LPAR
+	_T_RPAR
 	_T_INVALID
 	_T_EOF
 )
@@ -26,6 +28,8 @@ var literals = map[tokenType]string{
 	_T_SUB:     "-",
 	_T_MUL:     "*",
 	_T_DEV:     "/",
+	_T_LPAR:    "(",
+	_T_RPAR:    ")",
 	_T_INVALID: "INVALID",
 	_T_EOF:     "EOF",
 }

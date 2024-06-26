@@ -85,6 +85,7 @@ func TestCanParse(t *testing.T) {
 		{"1 / 2", "(1 / 2)"},
 		{"-1 / -2", "((-1) / (-2))"},
 		{"1 + 2 / 3 - -2", "((1 + (2 / 3)) - (-2))"},
+		{"(1 + 2) * (3 * 4)", "((1 + 2) * (3 * 4))"},
 	}
 
 	for i, tc := range testCases {
@@ -110,7 +111,8 @@ func TestParserErrors(t *testing.T) {
 		{"x", `unexpected token "x"`},
 		{"1 + x", `unexpected token "x"`},
 		{"1 + ", `unexpected end of expression`},
-		{"1 + 1 2", `unexpected token "2", expected "EOF"`},
+		{"1 + 1 2", `unexpected token "2", expected end of expression`},
+		{"(1 + 2", `unclosed grouped expression, expected ")"`},
 	}
 
 	for i, tc := range testCases {

@@ -3,7 +3,7 @@ package expr
 import "testing"
 
 func TestLexer(t *testing.T) {
-	input := `123 + 456 * 99 - 199 / s`
+	input := `123 + 456 * 99 - 199 / (s)`
 
 	l := newLexer([]byte(input))
 
@@ -16,7 +16,9 @@ func TestLexer(t *testing.T) {
 		{_T_SUB, "-"},
 		{_T_NUM, "199"},
 		{_T_DEV, "/"},
+		{_T_LPAR, "("},
 		{_T_INVALID, "s"},
+		{_T_RPAR, ")"},
 		{_T_EOF, "EOF"},
 	}
 

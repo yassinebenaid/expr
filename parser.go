@@ -21,8 +21,9 @@ func newParser(l *lexer) *parser {
 	p.proceed()
 
 	p.prefixParser = map[tokenType]func() expression{
-		_T_NUM: p.parseInteger,
-		_T_SUB: p.parsePrefix,
+		_T_NUM:  p.parseInteger,
+		_T_SUB:  p.parsePrefix,
+		_T_LPAR: p.parseGroupedExp,
 	}
 	p.infixParser = map[tokenType]func(expression) expression{
 		_T_ADD: p.parseInfix,
@@ -37,7 +38,7 @@ func (p *parser) parse() expression {
 	var exp expression = p.parseExpression(_PREC_LOW)
 
 	if p.currToken._type != _T_EOF {
-		p.errors = append(p.errors, fmt.Errorf(`unexpected token "%v", expected "EOF"`, p.currToken.literal))
+		p.errors = append(p.errors, fmt.Errorf(`unexpected token "%v", expected end of expression`, p.currToken.literal))
 	}
 
 	return exp
@@ -78,6 +79,18 @@ func (p *parser) parsePrefix() expression {
 	p.proceed()
 	pref.operand = p.parseExpression(_PREC_HIGH)
 	return pref
+}
+
+func (p *parser) parseGroupedExp() expression {
+	p.proceed()
+	exp := p.parseExpression(_PREC_LOW)
+
+	if p.currToken._type != _T_RPAR {
+		p.errors = append(p.errors, fmt.Errorf("unclosed grouped expression, expected %q", _T_RPAR))
+	}
+
+	p.proceed()
+	return exp
 }
 
 func (p *parser) parseInfix(left expression) expression {
