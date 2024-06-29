@@ -26,17 +26,17 @@ func (l *lexer) nextToken() token {
 	case l.ch == 0:
 		tok._type, tok.literal = _T_EOF, "EOF"
 	case l.ch == '+':
-		tok._type, tok.literal = _T_ADD, "+"
+		tok._type, tok.literal = _T_ADD, string(l.ch)
 	case l.ch == '-':
-		tok._type, tok.literal = _T_SUB, "-"
+		tok._type, tok.literal = _T_SUB, string(l.ch)
 	case l.ch == '*':
-		tok._type, tok.literal = _T_MUL, "*"
+		tok._type, tok.literal = _T_MUL, string(l.ch)
 	case l.ch == '/':
-		tok._type, tok.literal = _T_DEV, "/"
+		tok._type, tok.literal = _T_DEV, string(l.ch)
 	case l.ch == '(':
-		tok._type, tok.literal = _T_LPAR, "("
+		tok._type, tok.literal = _T_LPAR, string(l.ch)
 	case l.ch == ')':
-		tok._type, tok.literal = _T_RPAR, ")"
+		tok._type, tok.literal = _T_RPAR, string(l.ch)
 	case (l.ch <= '9' && l.ch >= '0') || (l.ch == '.' && (l.peek <= '9' && l.peek >= '0')):
 		var num []byte
 		tok._type = _T_INT
