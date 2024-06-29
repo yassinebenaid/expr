@@ -5,7 +5,7 @@ import (
 )
 
 func TestLexer(t *testing.T) {
-	input := `123 + 456.12 - .234 * 122. / . | 199 & 12.34.54 / (s)`
+	input := `123 + 456.12 - .234 * 122. / . | 199 & 12.34.54 << 2 >> 4 - (s)`
 
 	l := newLexer([]byte(input))
 
@@ -24,7 +24,11 @@ func TestLexer(t *testing.T) {
 		{_T_BINAND, "&"},
 		{_T_FLOAT, "12.34"},
 		{_T_FLOAT, ".54"},
-		{_T_DEV, "/"},
+		{_T_BINLSHIFT, "<<"},
+		{_T_INT, "2"},
+		{_T_BINRSHIFT, ">>"},
+		{_T_INT, "4"},
+		{_T_SUB, "-"},
 		{_T_LPAR, "("},
 		{_T_INVALID, "s"},
 		{_T_RPAR, ")"},
