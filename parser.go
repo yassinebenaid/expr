@@ -21,9 +21,10 @@ func newParser(l *lexer) *parser {
 	p.proceed()
 
 	p.prefixParser = map[tokenType]func() expression{
-		_T_INT:  p.parseInteger,
-		_T_SUB:  p.parsePrefix,
-		_T_LPAR: p.parseGroupedExp,
+		_T_INT:   p.parseInteger,
+		_T_FLOAT: p.parseFloat,
+		_T_SUB:   p.parsePrefix,
+		_T_LPAR:  p.parseGroupedExp,
 	}
 	p.infixParser = map[tokenType]func(expression) expression{
 		_T_ADD:       p.parseInfix,
@@ -75,6 +76,15 @@ func (p *parser) parseInteger() expression {
 	}
 	p.proceed()
 	return integer(n)
+}
+
+func (p *parser) parseFloat() expression {
+	n, err := strconv.ParseFloat(p.currToken.literal, 64)
+	if err != nil {
+		p.errors = append(p.errors, fmt.Errorf(`unable to parse float "%v"`, p.currToken.literal))
+	}
+	p.proceed()
+	return float(n)
 }
 
 func (p *parser) parsePrefix() expression {

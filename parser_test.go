@@ -95,7 +95,7 @@ func TestCanParse(t *testing.T) {
 		{"1 << 2 * 3", "((1 << 2) * 3)"},
 		{"1 >> 2 * 3", "((1 >> 2) * 3)"},
 		{"1 + 2 | 3 & 4 * 5", "((1 + 2) | ((3 & 4) * 5))"},
-		{"1 + 2 | 3 & 4 * 5 << 6 / 7 - 8 >> 9", "(((1 + 2) | ((((3 & 4) * 5) << 6) / 7)) - (8 >> 9))"},
+		{"1 + 2.2 | .3 & 4. * 5 << 6 / 7 - 8 >> 9", "(((1 + 2.2) | ((((0.3 & 4) * 5) << 6) / 7)) - (8 >> 9))"},
 	}
 
 	for i, tc := range testCases {
@@ -107,7 +107,7 @@ func TestCanParse(t *testing.T) {
 			t.Fatalf("parser has %d errors#0: %v", len(p.errors), p.errors[0])
 		}
 
-		if exp := n.String(); tc.expectedExpression != exp {
+		if exp := n.ToString(); tc.expectedExpression != exp {
 			t.Fatalf(`case#%d: expected "%s", got "%s"`, i, tc.expectedExpression, exp)
 		}
 	}
