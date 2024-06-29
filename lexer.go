@@ -16,6 +16,7 @@ func newLexer(in []byte) *lexer {
 
 func (l *lexer) nextToken() token {
 	var tok token
+	var skip_reading bool
 
 	for l.ch == ' ' || l.ch == '\n' || l.ch == '\t' {
 		l.readCh()
@@ -36,12 +37,16 @@ func (l *lexer) nextToken() token {
 		tok._type, tok.literal = _T_LPAR, "("
 	case l.ch == ')':
 		tok._type, tok.literal = _T_RPAR, ")"
-	case (l.ch <= '9' && l.ch >= '0') || l.ch == '.':
+	case (l.ch <= '9' && l.ch >= '0') || (l.ch == '.' && (l.peek <= '9' && l.peek >= '0')):
 		var num []byte
 		tok._type = _T_INT
 
 		for {
 			if l.ch == '.' {
+				if tok._type == _T_FLOAT {
+					skip_reading = true
+					break
+				}
 				tok._type = _T_FLOAT
 			}
 			num = append(num, l.ch)
@@ -57,7 +62,10 @@ func (l *lexer) nextToken() token {
 		tok._type, tok.literal = _T_INVALID, string(l.ch)
 	}
 
-	l.readCh()
+	if !skip_reading {
+		l.readCh()
+	}
+
 	return tok
 }
 
