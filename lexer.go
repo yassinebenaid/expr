@@ -37,6 +37,10 @@ func (l *lexer) nextToken() token {
 		tok._type, tok.literal = _T_LPAR, string(l.ch)
 	case l.ch == ')':
 		tok._type, tok.literal = _T_RPAR, string(l.ch)
+	case l.ch == '|':
+		tok._type, tok.literal = _T_BINOR, string(l.ch)
+	case l.ch == '&':
+		tok._type, tok.literal = _T_BINAND, string(l.ch)
 	case (l.ch <= '9' && l.ch >= '0') || (l.ch == '.' && (l.peek <= '9' && l.peek >= '0')):
 		var num []byte
 		tok._type = _T_INT
