@@ -36,17 +36,23 @@ func (l *lexer) nextToken() token {
 		tok._type, tok.literal = _T_LPAR, "("
 	case l.ch == ')':
 		tok._type, tok.literal = _T_RPAR, ")"
-	case l.ch <= '9' && l.ch >= '0':
+	case (l.ch <= '9' && l.ch >= '0') || l.ch == '.':
 		var num []byte
+		tok._type = _T_INT
+
 		for {
+			if l.ch == '.' {
+				tok._type = _T_FLOAT
+			}
 			num = append(num, l.ch)
 
-			if l.peek > '9' || l.peek < '0' {
+			if (l.peek > '9' || l.peek < '0') && l.peek != '.' {
 				break
 			}
 			l.readCh()
 		}
-		tok._type, tok.literal = _T_NUM, string(num)
+
+		tok.literal = string(num)
 	default:
 		tok._type, tok.literal = _T_INVALID, string(l.ch)
 	}

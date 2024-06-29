@@ -1,20 +1,22 @@
 package expr
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestLexer(t *testing.T) {
-	input := `123 + 456 * 99 - 199 / (s)`
+	input := `123 + 456.12 * .234 - 199 / (s)`
 
 	l := newLexer([]byte(input))
 
 	tokens := []token{
-		{_T_NUM, "123"},
+		{_T_INT, "123"},
 		{_T_ADD, "+"},
-		{_T_NUM, "456"},
+		{_T_FLOAT, "456.12"},
 		{_T_MUL, "*"},
-		{_T_NUM, "99"},
+		{_T_FLOAT, ".234"},
 		{_T_SUB, "-"},
-		{_T_NUM, "199"},
+		{_T_INT, "199"},
 		{_T_DEV, "/"},
 		{_T_LPAR, "("},
 		{_T_INVALID, "s"},

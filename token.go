@@ -11,7 +11,9 @@ type token struct {
 
 const (
 	_ tokenType = iota
-	_T_NUM
+	_T_INT
+	_T_FLOAT
+	_T_HEX
 	_T_ADD
 	_T_SUB
 	_T_MUL
@@ -23,7 +25,9 @@ const (
 )
 
 var literals = map[tokenType]string{
-	_T_NUM:     "NUMBER",
+	_T_INT:     "INT",
+	_T_FLOAT:   "FLOAT",
+	_T_HEX:     "HEX",
 	_T_ADD:     "+",
 	_T_SUB:     "-",
 	_T_MUL:     "*",
