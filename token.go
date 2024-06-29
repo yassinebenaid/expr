@@ -61,8 +61,12 @@ const (
 )
 
 var precedences = map[tokenType]int{
-	_T_ADD: _PREC_MEDIUM,
-	_T_SUB: _PREC_MEDIUM,
-	_T_MUL: _PREC_HIGH,
-	_T_DEV: _PREC_HIGH,
+	_T_ADD:       _PREC_MEDIUM,
+	_T_SUB:       _PREC_MEDIUM,
+	_T_BINOR:     _PREC_MEDIUM,
+	_T_MUL:       _PREC_HIGH,
+	_T_DEV:       _PREC_HIGH,
+	_T_BINAND:    _PREC_HIGH,
+	_T_BINLSHIFT: _PREC_HIGH,
+	_T_BINRSHIFT: _PREC_HIGH,
 }

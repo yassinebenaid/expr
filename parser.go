@@ -26,10 +26,14 @@ func newParser(l *lexer) *parser {
 		_T_LPAR: p.parseGroupedExp,
 	}
 	p.infixParser = map[tokenType]func(expression) expression{
-		_T_ADD: p.parseInfix,
-		_T_SUB: p.parseInfix,
-		_T_MUL: p.parseInfix,
-		_T_DEV: p.parseInfix,
+		_T_ADD:       p.parseInfix,
+		_T_SUB:       p.parseInfix,
+		_T_MUL:       p.parseInfix,
+		_T_DEV:       p.parseInfix,
+		_T_BINAND:    p.parseInfix,
+		_T_BINOR:     p.parseInfix,
+		_T_BINLSHIFT: p.parseInfix,
+		_T_BINRSHIFT: p.parseInfix,
 	}
 	return p
 }
