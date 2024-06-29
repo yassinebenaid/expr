@@ -123,6 +123,7 @@ func TestParserErrors(t *testing.T) {
 		{"1 + ", `unexpected end of expression`},
 		{"1 + 1 2", `unexpected token "2", expected end of expression`},
 		{"(1 + 2", `unclosed grouped expression, expected ")"`},
+		{"1.2.3", `unexpected token ".3", expected end of expression`},
 	}
 
 	for i, tc := range testCases {
