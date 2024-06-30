@@ -24,6 +24,7 @@ func newParser(l *lexer) *parser {
 		_T_INT:   p.parseInteger,
 		_T_FLOAT: p.parseFloat,
 		_T_SUB:   p.parsePrefix,
+		_T_ADD:   p.parsePrefix,
 		_T_LPAR:  p.parseGroupedExp,
 	}
 	p.infixParser = map[tokenType]func(expression) expression{

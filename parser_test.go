@@ -75,6 +75,7 @@ func TestCanParse(t *testing.T) {
 		{"1", "1"},
 		{"-1", "(-1)"},
 		{"--1", "(-(-1))"},
+		{"+1", "(+1)"},
 		{"1 + 2", "(1 + 2)"},
 		{"1 - 2", "(1 - 2)"},
 		{"1 + 2 - 3 + 4 - 5", "((((1 + 2) - 3) + 4) - 5)"},
@@ -104,7 +105,7 @@ func TestCanParse(t *testing.T) {
 		n := p.parse()
 
 		if len(p.errors) > 0 {
-			t.Fatalf("parser has %d errors#0: %v", len(p.errors), p.errors[0])
+			t.Fatalf("case#%d: parser has %d errors#0: %v", i, len(p.errors), p.errors[0])
 		}
 
 		if exp := n.ToString(); tc.expectedExpression != exp {
