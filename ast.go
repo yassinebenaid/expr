@@ -25,9 +25,9 @@ func (i prefix) ToString() string {
 	return fmt.Sprintf("(%v%v)", i.operator.literal, i.operand.ToString())
 }
 
-type integer int
+type numberLiteral int
 
-func (i integer) ToString() string {
+func (i numberLiteral) ToString() string {
 	return fmt.Sprint(i)
 }
 

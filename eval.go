@@ -10,7 +10,7 @@ func (n Number) ToString() string {
 
 func eval(exp expression) Number {
 	switch v := exp.(type) {
-	case integer:
+	case numberLiteral:
 		return Number(v)
 	case prefix:
 		return evalPrefix(v)
