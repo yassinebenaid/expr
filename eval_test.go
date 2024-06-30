@@ -7,13 +7,13 @@ import (
 func TestCanEval(t *testing.T) {
 	testCases := []struct {
 		input              string
-		expectedExpression Value
+		expectedExpression Number
 	}{
-		{"1", Number(1)},
-		{"-1", Number(-1)},
-		{"--1", Number(1)},
-		{"+1", Number(1)},
-		// {"1 + 2", Number(3)},
+		{"1", 1},
+		{"-1", -1},
+		{"--1", 1},
+		{"+1", 1},
+		// {"1 + 2", 3},
 		// {"1 - 2", "(1 - 2)"},
 		// {"1 + 2 - 3 + 4 - 5", "((((1 + 2) - 3) + 4) - 5)"},
 		// {"-1 + -2 - -3 + -4 - -5", "(((((-1) + (-2)) - (-3)) + (-4)) - (-5))"},

@@ -2,23 +2,13 @@ package expr
 
 import "fmt"
 
-type Value interface {
-	ToString() string
-}
-
 type Number float64
 
 func (n Number) ToString() string {
 	return fmt.Sprint(n)
 }
 
-type Boolean bool
-
-func (n Boolean) ToString() string {
-	return fmt.Sprintf("%t", n)
-}
-
-func eval(exp expression) Value {
+func eval(exp expression) Number {
 	switch v := exp.(type) {
 	case integer:
 		return Number(v)
@@ -29,22 +19,14 @@ func eval(exp expression) Value {
 	}
 }
 
-func evalPrefix(exp prefix) Value {
+func evalPrefix(exp prefix) Number {
 	value := eval(exp.operand)
 
 	switch exp.operator._type {
 	case _T_SUB:
-		num, ok := value.(Number)
-		if !ok {
-			panic("evalPrefix: operand is not a number")
-		}
-		return Number(-num)
+		return -value
 	case _T_ADD:
-		num, ok := value.(Number)
-		if !ok {
-			panic("evalPrefix: operand is not a number")
-		}
-		return Number(num)
+		return value
 	default:
 		panic("evalPrefix: prefix is undefined")
 	}
