@@ -85,7 +85,7 @@ func (p *parser) parseFloat() expression {
 		p.errors = append(p.errors, fmt.Errorf(`unable to parse float "%v"`, p.currToken.literal))
 	}
 	p.proceed()
-	return float(n)
+	return numberLiteral(n)
 }
 
 func (p *parser) parsePrefix() expression {
